@@ -31,7 +31,7 @@ int main()
 	setlocale(LC_ALL, "rus");
 	in ik;
 	ring<in> kek;
-	while(1)
+	/*while(1)
 	{
 		for (int i = 0; i < 6; i++)
 		{
@@ -46,9 +46,18 @@ int main()
 		cout << endl;
 		kek.cleanall();
 	}
-
+	*/
 
 	ring<product> prod;
 	prod.pushbegin(product("moloko", 4));
+	milk fee("milkiway", 3, "yogurt", 10500);
+	milk fef("milki", -1, "sblrok", 3800);
+	baton net(300, 15, "bulki");
+	baton ne(1500.7, 4, "s povidlom");
 	prod.printtemp();
+	cout << endl <<fee;
+	cout << endl;
+	cout << fef << endl;
+	cout << net << endl;
+	cout << ne;
 }
