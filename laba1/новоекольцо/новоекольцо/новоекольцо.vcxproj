@@ -147,10 +147,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="function.cpp" />
+    <ClCompile Include="iterators.cpp" />
+    <ClCompile Include="men.cpp" />
     <ClCompile Include="menu.cpp" />
+    <ClCompile Include="product.cpp" />
     <ClCompile Include="Корзина.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="exeption.h" />
     <ClInclude Include="korzina.h" />
     <ClInclude Include="list.h" />
   </ItemGroup>

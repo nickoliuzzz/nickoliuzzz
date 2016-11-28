@@ -1,5 +1,5 @@
 #pragma once
-#include "list.h"
+#include "C:\Users\о\documents\visual studio 2015\Projects\новоекольцо\новоекольцо\function.cpp"
 #include <conio.h>
 char pas[5] = { '1','2','3','4' };
 int f = 0;
@@ -11,10 +11,19 @@ protected:
 	int stoim, kod;
 public:
 	product() {};
-
+	product& operator=(const product &tmp)
+	{
+		strcpy_s(ms, tmp.ms);
+		stoim = tmp.stoim;
+		kod = tmp.kod;;
+		return *this;
+	}
 	virtual bool operator<(const product& tmp)
 	{
-		if (stoim < tmp.stoim) return true;
+		if (stoim < tmp.stoim)
+		{
+			return true;
+		}
 		return false;
 	}
 	int getstoim() { return stoim; }
@@ -23,7 +32,7 @@ public:
 		kod = k;
 	}
 
-	virtual void koder() { setkod(25 * 100000 + f++); }
+	virtual void koder() { setkod(25 * 10000 + f++); }
 
 	product(char *naz)
 	{
@@ -47,7 +56,16 @@ public:
 
 	friend ostream& operator<<(ostream &my, product& tmp)
 	{
-		my << setw(10) << tmp.kod << setw(15) << tmp.ms << setw(30) << tmp.stoim;
+		my << setw(10) << tmp.kod << setw(15) << tmp.ms << setw(30) << tmp.stoim << endl;
+		return my;
+	}
+	friend istream& operator>>(istream &my,product &tmp)
+	{
+		cout << "Введите название продукта:    ";
+		my >> tmp.ms;
+		cout << "Введите стоимость продукта:    ";
+		my >> tmp.stoim;
+		tmp.kod = 25 * 10000 + f++;
 		return my;
 	}
 
@@ -71,6 +89,16 @@ public:
 		if (stoim < tmp.stoim) return true;
 		return false;
 	}
+	milk& operator=(const milk &tmp)
+	{
+		strcpy_s(ms, tmp.ms);
+		stoim = tmp.stoim;
+		kod = tmp.kod;
+		srok = tmp.srok;
+		strcpy_s(firma, tmp.firma);
+		return *this;
+	}
+
 	milk(char * ms, int sr,char * naz, int cena)	: product (naz)
 	{
 		strcpy_s(firma, ms);
@@ -85,9 +113,27 @@ public:
 		if (srok > 0) return true;
 		return false;
 	}
+	milk() { koder(); }
 	friend ostream& operator<<(ostream &my, milk& tmp)
 	{
-		my << setw(10) << tmp.kod << setw(15) << tmp.ms << setw(10) << tmp.firma << setw(20) << tmp.stoim;
+		my << setw(10) << tmp.kod << setw(15) << tmp.ms << setw(10) << tmp.firma << setw(20) << tmp.stoim << endl;
+		return my;
+	}
+	friend istream& operator>>(istream &my, milk& tmp)
+	{
+		cout << "Введите название продукта:    ";
+		my >> tmp.ms;
+		cout << "Введите стоимость продукта:    ";
+		my >> tmp.stoim;
+		cout << "Название фирмы:    ";
+		char ms3[10];
+		my >> ms3;
+		strcpy_s(tmp.firma,ms3);
+		cout << "Введите cсколько дней срока годности осталось:    ";
+		my >> tmp.srok;
+		if (tmp.srok < 0)
+			tmp.stoim = 0;
+		tmp.kod = (25 * 10000 + 100 + f++);
 		return my;
 	}
 };
@@ -104,6 +150,17 @@ class baton :public product
 	bool narazves;
 	int sps;        //stoim per shtuka ili za kilogramm
 public:
+	baton& operator=(const baton &tmp)
+	{
+		strcpy_s(ms, tmp.ms);
+		stoim = tmp.stoim;
+		kod = tmp.kod;
+		mass = tmp.mass;
+		number = tmp.number;
+		narazves = tmp.narazves;
+		sps = tmp.sps;
+		return *this;
+	}
 	bool getnarazves() { return narazves; }
 	double getmass() { return mass; }
 	int getnumber() { return number; }
@@ -111,7 +168,7 @@ public:
 	baton(double mas, int stoimo, char *naz)
 	{
 		mass = mas;
-		sps = stoim;
+		sps = stoimo;
 		changename(naz);
 		setves(true);
 		int f = int(sps*mas + 0.5);
@@ -140,9 +197,41 @@ public:
 	void setsps(int ss) { sps = ss; }
 	friend ostream& operator<<(ostream &my, baton& tmp)
 	{
-		if(tmp.getnarazves())
-			my << setw(10) << tmp.kod << setw(15) << tmp.ms << setw(20) << tmp.getmass() << setw(10) << tmp.stoim;
-		else my << setw(10) << tmp.kod << setw(15) << tmp.ms << setw(20) << tmp.getnumber() << setw(10) << tmp.stoim;
+		//if(tmp.getnarazves())
+		//	my << setw(10) << tmp.kod << setw(15) << tmp.ms << setw(20) << tmp.getmass() <<setw(10)<< tmp.sps<< setw(10) << tmp.stoim;
+		//else 
+		my << setw(10) << tmp.kod << setw(15) << tmp.ms << setw(20) << tmp.sps << setw(10) << tmp.stoim;
+		cout << endl;
+		return my;
+	}
+	friend istream& operator>>(istream &my,baton& tmp)
+	{
+		char c;
+		cout << "Введите название продукта:    ";
+		my >> tmp.ms;
+		cout << "Продоётся продукт наразвес(y|n):    ";
+		do
+		{
+			c = _getch();
+		} while (c != 'y' && c != 'n');
+		cout << c;
+		if (c == 'y')
+		{
+			cout << endl << "Введите стоимость продукта за грамм:    ";
+			my >> tmp.sps;
+			tmp.narazves = true;
+			cout << "Введите массу продукта:    ";
+			my >> tmp.mass;
+			tmp.stoim = int(tmp.mass*tmp.sps + 0.5);
+			return my;
+		}
+		cout << endl << "Введите стоимость продукта за штуку:    ";
+		my >> tmp.sps;
+		cout << "Введите количество продуктов в упаковке:    ";
+		my >> tmp.number;
+		tmp.narazves = false;
+		tmp.stoim = tmp.sps * tmp.number;
+		tmp.kod = (25 * 10000 + 200 + f++);
 		return my;
 	}
 };
@@ -158,17 +247,47 @@ class korzina
 	ring<baton> bat;
 	ring<milk> mil;
 public:
-	korzina() {};
+	korzina() 
+	{
+		prod.setname("Продукты");
+		bat.setname("Хлебный отдел");
+		mil.setname("Молочный отдел");
+	};
 	void add(product ms1) { prod.pushend(ms1); }
-	void popprod() { prod.pop(); }
+	void popprod() { prod.gettemp(); prod.pop(); }
 	void goprod() { prod.gorig(); }
 	void add(baton ms1) { bat.pushend(ms1); }
-	void popbat() { bat.pop(); }
+	void popbat() { bat.gettemp(); bat.pop(); }
 	void gobat() { bat.gorig(); }
 	void add(milk ms1) { mil.pushend(ms1); }
-	void popmil() { mil.pop(); }
+	void popmil() 
+	{ 
+		mil.gettemp();
+		mil.pop(); 
+	}
 	void gomil() { mil.gorig(); };
+	void popall() 
+	{
+		prod.cleanall(); 
+		bat.cleanall(); 
+		mil.cleanall(); 
+	}
 	int raschet() ;
+	void sort()
+	{
+		bat.sort();
+		mil.sort();
+		prod.sort();
+	}
+	friend ostream& operator<<(ostream &my, korzina& tmp)
+	{
+		my << setw(10) << "Код продкт." << setw(15) << "Назв. продкт." << setw(10) << "Фирма  " << setw(10) << "р/(шт|гр)";
+		my << setw(10) << "Стоимость" << endl;
+		my << tmp.prod;
+		cout << tmp.mil;
+		cout << tmp.bat;
+		return my;
+	}
 };
 
 int korzina::raschet()
@@ -186,11 +305,11 @@ int korzina::raschet()
 		sum += mil.gettemp().getstoim();
 		mil.gorig();
 	}
-	n = mil.getsize();
+	n = bat.getsize();
 	for (int i = 0; i < n; i++)
 	{
-		sum += mil.gettemp().getstoim();
-		mil.gorig();
+		sum += bat.gettemp().getstoim();
+		bat.gorig();
 	}
 	return sum;
 }
@@ -228,9 +347,8 @@ int kartochka::balans()
 	{
 		do
 		{
-			//c = _getch();
-			c = '1';
-		} while (c > '9' || c < '0');
+			c = _getch();
+		} while (c > '9' || c < '0' );
 		ms[i] = c;
 		cout << "*";
 	}
@@ -238,12 +356,12 @@ int kartochka::balans()
 	if (strcmp(ms, pass) == 0)
 	{
 		money -= raschet();
-		cout << endl << "Vse OK";
+		cout << endl << "Vse OK" << endl;
 		tryes = 3;
 		return money;
 	}
 	cout << endl << "BAD TRY";
-	return -1;
+	throw "Не удалось узнать баланс";
 }
 
 bool kartochka::unlock()
@@ -254,10 +372,7 @@ bool kartochka::unlock()
 		return false;
 	}
 	if (money < raschet())
-	{
-		cout << endl << "Nedostatochno sredstv";
-		return true;
-	}
+		throw "Недостаточно средств";
 	char ms[5];
 	char c;
 	for (tryes; tryes; tryes--)
@@ -267,8 +382,7 @@ bool kartochka::unlock()
 		{
 			do
 			{
-//				c= getch();
-				c = '1';
+				c= _getch();
 			} while (c > '9' || c < '0');
 			ms[i] = c; 
 			cout << "*";
@@ -277,13 +391,15 @@ bool kartochka::unlock()
 		if (strcmp(ms, pass) == 0)
 		{
 			money -= raschet();
-			cout << endl << "Vse OK";
+			cout << endl << "Vse OK" << endl;
+			cout << "У вас с карты снято " << raschet() << endl;
 			tryes = 3;
+			popall();
 			return true;
 		}
 		cout << endl << "BAD TRY";
 	}
-	cout << endl << "Blokirovka kartochki";
+	cout << endl << "Blokirovka kartochki" << endl;
 	transakciia = false;
-	return false;
+	throw exeption("Карта теперь заблокирована");
 }
