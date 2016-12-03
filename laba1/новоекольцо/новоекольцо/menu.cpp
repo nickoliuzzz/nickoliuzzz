@@ -1,203 +1,24 @@
-#include "list.h"
-#include "korzina.h"
+#pragma once
+//#include "function.cpp"
+#include "men.h"
 #include <locale.h>
-class in
+#include "korzina.h"
+#include "algorithm.cpp"
+template <class T>
+void meh(ring<T> *prod, kartochka *mem);
+void menu(kartochka *mem);
+
+void skrin()
 {
-public:
-	in() {};
-	~in() {};
-	int i;
-	friend ostream& operator<<(ostream &my, in& tmp)
-	{
-		my << tmp.i;
-		return my;
-	};
-	friend istream& operator>>(istream &my, in& tmp)
-	{
-		int j;
-		my >> j;
-		tmp.i = j;
-		return my;
-	}
-	bool operator<(const in& tmp)
-	{
-		if (i<tmp.i)
-			return true;
-		return false;
-	}
-};
-
-void menu(ring<product> &prod, ring<milk> &mil, ring<baton> &bat)
-{
-	product tmp1;
-	milk tmp2;
-	baton tmp3;
-
-	int k=1;
-	while (k)
-	{
-		int s = 1;
-		cout << "\n\n1- Продукты\n2- Молоко\n3- Хлеб \nEsc- для выхода" << endl;
-		switch (_getch())
-		{
-		case '1':
-		{
-			while (s)
-			{
-				cout << "\n1- add\n2- pop \n3- cleanall \nr- next\nq- back\n6- showall\n7- sort\n4- show temp\n";
-				switch (_getch())
-				{
-				case '1':
-					cin >> tmp1;
-					prod.pushend(tmp1);
-					break;
-				case '2':
-					prod.pop();
-					break;
-				case '3':
-					prod.cleanall();
-					break;
-				case '4':
-					try
-					{
-						cout << prod.gettemp();
-					}
-					catch (exeption over)
-					{
-						cout << "Ошибка " << over;
-					}
-					break;
-				case 'r':
-					prod.gorig();
-					break;
-				case 'q':
-					prod.golef();
-					break;
-				case '6':
-					cout << prod;
-					break;
-				case '7':
-					//if (prod.gettemp() < prod.gettemp());
-						//cout << "prp";
-					prod.sort();
-					break;
-				case 27:
-					s = 0;
-				default:
-					break;
-				}
-			}
-
-		}
-		case '2':
-		{
-			while (1)
-			{
-				cout << "\n1- add\n2- pop \n3- cleanall \nr- next\nq- back\n6- showall\n7- sort\n4- show temp\n";
-				switch (_getch())
-				{
-				case '1':
-					cin >> tmp2;
-					mil.pushend(tmp2);
-					break;
-				case '2':
-					mil.pop();
-					break;
-				case '3':
-					mil.cleanall();
-					break;
-				case '4':
-					try
-					{
-						cout << mil.gettemp();
-					}
-					catch (exeption over)
-					{
-						cout << "Ошибка " << over;
-					}
-					break;
-				case 'r':
-					mil.gorig();
-					break;
-				case 'q':
-					mil.golef();
-					break;
-				case '6':
-					cout << mil;
-					break;
-				case '7':
-					mil.sort();
-					break;
-				case 27:
-					s=0;
-				default:
-					break;
-				}
-			}
-
-		}
-		case '3':
-		{
-			while (1)
-			{
-				cout << "\n1- add\n2- pop \n3- cleanall \nr- next\nq- back\n6- showall\n7- sort\n4- show temp\n";
-				switch (_getch())
-				{
-				case '1':
-					cin >> tmp3;
-					bat.pushend(tmp3);
-					break;
-				case '2':
-					bat.pop();
-					break;
-				case '3':
-					bat.cleanall();
-					break;
-				case '4':
-					try
-					{
-						cout << bat.gettemp();
-					}
-					catch (exeption over)
-					{
-						cout << "Ошибка " << over;
-					}
-					break;
-				case 'r':
-					bat.gorig();
-					break;
-				case 'q':
-					bat.golef();
-					break;
-				case '6':
-					cout << bat;
-					break;
-				case '7':
-					bat.sort();
-					break;
-				case 27:
-					s = 0;
-				default:
-					break;
-				}
-			}
-
-		}
-		case 27: 
-			cout << endl << "Отлично поработали\n";
-			return;
-
-		default:
-			break;
-		}
-	}
-
+	cout << "\n1- add\n2- pop \n3- cleanall \ns- addtemp to korzina\ne- show temp\nr- next\nq- back\n6- showall\n7- sort\n8- show list\n";
 }
+
+
 int main()
 {
 	setlocale(LC_ALL, "rus");
-	in ik;
-	ring<in> kek;
+	//in ik;
+	//ring<in> kek;
 	/*while(1)
 	{
 		for (int i = 0; i < 6; i++)
@@ -214,9 +35,6 @@ int main()
 		kek.cleanall();
 	}
 	*/
-	ring<product> prod;
-	ring<milk> mil;
-	ring<baton> bat;
 	product tmp1;
 	milk tmp2;
 	baton tmp3;
@@ -242,12 +60,12 @@ int main()
 				case '5':
 					mem.unlock();
 					break;
-				case '6': 
+				case '6':
 					cout << mem;
 					cout << setw(45) << "Итого " << setw(10) << mem.raschet();
 					break;
 				case '7':
-					menu(prod ,mil,bat);
+					menu(&mem);
 					break;
 				case 27:
 					throw exeption("Всё нормально\nПросто вышли ");
@@ -267,38 +85,143 @@ int main()
 	{
 		cout << endl << "Ошибка " << over << endl;
 	}
-
-	/*	//cin >> bat;
-		prod.pushbegin(product("moloko", 4));
-		milk fee("milkiway", 3, "yogurt", 10500);
-		milk fef("milki", -1, "sblrok", 3800);
-		baton net(300, 15, "bulki");
-		baton ne(1500.7, 4, "s povidlom");
-		prod.printtemp();
-		cout << prod;
-		cout << endl << fee;
-		cout << endl;
-		cout << fef << endl;
-		cout << net << endl;
-		cout << ne;
-		cout << endl << endl << endl;
-		kartochka mem;
-		mem.add(fee);
-		int fere = mem.balans();
-		if(fere != -1)
-			cout << "У вас на счету " << fere << endl;
-		else cout << "Не удалось узнать баланс";
-		mem.add(net);
-		mem.add(prod.gettemp());
-		cout << endl << endl << endl;
-		cout << mem;
-		mem.unlock();
-		mem.popall();
-		mem.popmil();
-	}
-	catch (exeption over)
-	{
-		cout << endl << "Ошибка" << over << endl;
-	}
-	*/
 }
+template <class T>
+void meh(ring<T> *prod, kartochka *mem)
+{
+	T tmp1;
+	Iterator<T> it;
+	skrin();
+	while (1)
+	{
+		switch (_getch())
+		{
+		case '1':
+			cin >> tmp1;
+			(*prod).pushend(tmp1);
+			it = (*prod).tempf();
+			skrin();
+			break;
+		case '2':
+			(*prod).pop();
+			cout << endl << "OK" << endl;
+			break;
+		case '3':
+			(*prod).cleanall();
+			cout << endl << "OK" << endl;
+			break;
+		case 'e':
+			try
+			{
+				//cout << prod.gettemp();
+				cout << *it;
+			}
+			catch (exeption over)
+			{
+				cout << "Ошибка " << over;
+			}
+			cout << "\nМожете продолжать\n";
+			break;
+		case 'r':
+			//prod.gorig();
+			++it;
+			cout << endl << "-------------OK--------------" << endl;
+			break;
+		case 'q':
+			//prod.golef();
+			--it;
+			cout << "\n-------------OK--------------\n";
+			break;
+		case 's':
+			//mem.add(prod.gettemp());
+			(*mem).add(*it);
+			cout << "\nДобавлено\n";
+			break;
+		case '6':
+			cout << *prod;
+			skrin();
+			break;
+		case '7':
+		{
+			//prod.sort();
+			sort<T> fef(prod, (*prod).beginf(), (*prod).endf());
+			cout << "\n-------------OK--------------\n";
+			break;
+		}
+		case '8':
+			skrin();
+			break;
+		case 27:
+			cout << "\nВыйдено\n";
+			return;
+		default:
+			cout << "\nНе те кнопки\n";
+			skrin();
+			break;
+		}
+	}
+}
+
+
+void menu(kartochka *mem)
+{
+	ring<product> prod;
+	ring<milk> mil;
+	ring<baton> bat;
+	while (1)
+	{
+		int s = 1;
+		cout << "\n\n1- Продукты\n2- Молоко\n3- Хлеб \nEsc- для выхода" << endl;
+		switch (_getch())
+		{
+		case '1':
+		{
+			meh(&prod, mem);
+			break;
+		}
+		case '2':
+		{
+			meh(&mil, mem);
+			break;
+		}
+		case '3':
+		{
+			meh(&bat, mem);
+			break;
+		}
+		case 27:
+			cout << endl << "Отлично поработали\n";
+			return;
+
+		default:
+			break;
+		}
+	}
+
+}
+
+	class in
+	{
+	public:
+		in() {};
+		~in() {};
+		int i;
+		friend ostream& operator<<(ostream &my, in& tmp)
+		{
+			my << tmp.i;
+			return my;
+		};
+		friend istream& operator>>(istream &my, in& tmp)
+		{
+			int j;
+			my >> j;
+			tmp.i = j;
+			return my;
+		}
+		bool operator<(const in& tmp)
+		{
+			if (i<tmp.i)
+				return true;
+			return false;
+		}
+	};

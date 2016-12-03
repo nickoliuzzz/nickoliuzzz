@@ -1,5 +1,6 @@
 #pragma once
-#include "C:\Users\о\documents\visual studio 2015\Projects\новоекольцо\новоекольцо\function.cpp"
+//#include "function.cpp"
+#include "list.h"
 #include <conio.h>
 char pas[5] = { '1','2','3','4' };
 int f = 0;

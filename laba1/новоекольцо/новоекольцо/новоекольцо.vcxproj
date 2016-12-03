@@ -146,11 +146,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="algorithm.cpp" />
     <ClCompile Include="function.cpp" />
-    <ClCompile Include="iterators.cpp" />
-    <ClCompile Include="men.cpp" />
+    <ClCompile Include="iterators.h" />
+    <ClCompile Include="men.h" />
     <ClCompile Include="menu.cpp" />
     <ClCompile Include="product.cpp" />
+    <ClCompile Include="struct.cpp" />
     <ClCompile Include="Корзина.cpp" />
   </ItemGroup>
   <ItemGroup>
