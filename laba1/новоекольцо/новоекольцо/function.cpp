@@ -1,3 +1,4 @@
+//#pragma once
 //#include "list.h"
 //template <class T>
 //bool ring<T>::search(T inf)
@@ -8,7 +9,7 @@
 //			return true;
 //		temp = temp->left
 //	}
-//	retrun false;
+//	throw exeption("Нет таких елементов");
 //}
 //
 //template <class T>
@@ -38,6 +39,7 @@
 //{
 //	n = 1;
 //	kol<T> *tmp = (kol<T>*) malloc(sizeof(kol<T>));
+//	if (!tmp)	throw exeption("Память не выделалась");
 //	tmp->right = tmp;
 //	tmp->left = tmp;
 //	temp = tmp;
@@ -59,14 +61,16 @@
 //template <class T>
 //void ring<T>::cleanall()
 //{
+//	if (begin == NULL) return;// throw exeption("Всё и так было отчищено");
 //	while (pop());
+//	cout << ms << " пусто" << endl;
 //}
 //
 //template <class T>
 //bool ring<T>::popend()
 //{
 //	if (end == NULL)
-//		return false;
+//		throw exeption("Тут было пусто");
 //	if (begin != end)
 //	{
 //		kol<T> *tmp = end;
@@ -114,8 +118,8 @@
 //template <class T>
 //bool ring<T>::pushrig(T inf)
 //{
-//	kol<T> *tmp = new kol<T>;
-//	if (!tmp) return false;
+//	kol<T> *tmp = (kol<T>*) malloc(sizeof(kol<T>));
+//	if (!tmp)	throw exeption("Память не выделалась");
 //	if (begin == NULL)
 //	{
 //		tmp->right = tmp;
@@ -142,8 +146,8 @@
 //template <class T>
 //bool ring<T>::pushlef(T inf)
 //{
-//	kol<T> *tmp = new kol<T>;
-//	if (!tmp) return false;
+//	kol<T> *tmp = (kol<T>*) malloc(sizeof(kol<T>));
+//	if (!tmp)	throw exeption("Память не выделалась");
 //	if (begin == NULL)
 //	{
 //		tmp->right = tmp;
@@ -170,8 +174,8 @@
 //template <class T>
 //bool ring<T>::pushbegin(T inf)
 //{
-//	kol<T>  *tmp = new kol<T>;
-//	if (!tmp) return false;
+//	kol<T> *tmp = (kol<T>*) malloc(sizeof(kol<T>));
+//	if (!tmp)	throw exeption("Память не выделалась");
 //	if (begin == NULL)
 //	{
 //		tmp->right = tmp;
@@ -197,8 +201,8 @@
 //template <class T>
 //bool ring<T>::pushend(T inf)
 //{
-//	kol<T> *tmp = new kol<T>;
-//	if (!tmp) return false;
+//	kol<T> *tmp = (kol<T>*) malloc(sizeof(kol<T>));
+//	if (!tmp)	throw exeption("Память не выделалась");
 //	if (begin == NULL)
 //	{
 //		tmp->right = tmp;
@@ -225,10 +229,7 @@
 //void ring<T>::printall()
 //{
 //	if (end == NULL)
-//	{
-//		cout << "Нет инфы покачито" << endl;
-//		return;
-//	}
+//		throw exeption("Нечего выводить");
 //	cout << endl << "Вот ваше кольцо" << endl;
 //	temp = begin;
 //	do
@@ -310,8 +311,10 @@
 //void ring<T>::sort()
 //{
 //	if (begin == NULL)
-//		return;
+//		throw exeption("Нечего сортировать");
 //	temp = begin;
+//	T tmp1;
+//	T tmp2;
 //	kol<T> *tmp, *min;
 //	do
 //	{
@@ -319,8 +322,12 @@
 //		tmp = temp;
 //		do
 //		{
-//			if (tmp->info < min->info)
+//			tmp1 = tmp->info;
+//			tmp2 = min->info;
+//			if (tmp1 < tmp2)
+//			{
 //				min = tmp;
+//			}
 //			tmp = tmp->right;
 //		} while (tmp != begin);
 //		swap(temp, min);
